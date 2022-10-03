@@ -17,6 +17,7 @@ public class Candidato implements Serializable {
     @Id
     private String id;
     private String nome;
+    @Column(name = "email")
     private String email;
     @ElementCollection
     @CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "candidato_id"))
