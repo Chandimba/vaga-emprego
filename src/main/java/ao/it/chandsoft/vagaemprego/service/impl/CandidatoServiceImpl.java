@@ -11,12 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {
-
 
     private CandidatoRepository candidatoRepository;
 
@@ -27,6 +25,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public Candidato save(CandidatoDTO candidatoDTO) {
+
         return null;
     }
 
@@ -38,7 +37,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public Candidato findById(UUID uuid) {
 
-        if(Assert.isNotNull(uuid)) {
+        if(Assert.isNull(uuid)) {
             throw new NullPointerException("O id do candidato e obrigatorio");
         }
 

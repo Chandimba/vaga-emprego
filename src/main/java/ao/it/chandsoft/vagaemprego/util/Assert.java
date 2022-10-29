@@ -1,6 +1,7 @@
 package ao.it.chandsoft.vagaemprego.util;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class Assert {
 
@@ -18,5 +19,9 @@ public class Assert {
 
     public static boolean isNotEmpty(Collection collection) {
         return collection != null && !collection.isEmpty();
+    }
+
+    public static boolean isNull(Object obj) {
+        return obj == null;
     }
 }

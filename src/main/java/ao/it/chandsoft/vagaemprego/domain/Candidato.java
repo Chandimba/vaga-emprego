@@ -2,10 +2,12 @@ package ao.it.chandsoft.vagaemprego.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
 @Getter
@@ -29,8 +31,12 @@ public class Candidato implements Serializable {
     private String nacionalidade;
     private String cidade;
     private String morada;
+    @CreatedDate
     private LocalDate dataRegisto;
+    @Transient
     private int idade;
 
-
+    public Integer getIdade() {
+        return dataNascimento != null? (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now()): null;
+    }
 }
