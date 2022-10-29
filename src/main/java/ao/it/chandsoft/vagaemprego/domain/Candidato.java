@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,7 +24,6 @@ public class Candidato implements Serializable {
     private String email;
     @ElementCollection
     @CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "candidato_id"))
-    @JoinColumn(name = "numero")
     private Set<String> telefones;
     private LocalDate dataNascimento;
     @OneToOne
@@ -38,5 +38,10 @@ public class Candidato implements Serializable {
 
     public Integer getIdade() {
         return dataNascimento != null? (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now()): null;
+    }
+
+    @PrePersist
+    public void init() {
+        id = UUID.randomUUID().toString();
     }
 }
