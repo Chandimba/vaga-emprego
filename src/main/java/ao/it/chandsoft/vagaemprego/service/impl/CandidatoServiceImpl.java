@@ -1,9 +1,13 @@
 package ao.it.chandsoft.vagaemprego.service.impl;
 
 import ao.it.chandsoft.vagaemprego.domain.Candidato;
+import ao.it.chandsoft.vagaemprego.domain.Profissao;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoDTO;
 import ao.it.chandsoft.vagaemprego.exception.CandidatoNotFoundException;
+import ao.it.chandsoft.vagaemprego.exception.ProfissaoNotFoundException;
+import ao.it.chandsoft.vagaemprego.mappers.CandidatoMapper;
 import ao.it.chandsoft.vagaemprego.repository.CandidatoRepository;
+import ao.it.chandsoft.vagaemprego.repository.ProfissaoRepository;
 import ao.it.chandsoft.vagaemprego.service.CandidatoService;
 import ao.it.chandsoft.vagaemprego.util.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +15,29 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class CandidatoServiceImpl implements CandidatoService {
 
     private CandidatoRepository candidatoRepository;
+    private ProfissaoRepository profissaoRepository;
 
     @Autowired
-    public CandidatoServiceImpl(CandidatoRepository candidatoRepository) {
+    public CandidatoServiceImpl(CandidatoRepository candidatoRepository, ProfissaoRepository profissaoRepository) {
         this.candidatoRepository = candidatoRepository;
+        this.profissaoRepository = profissaoRepository;
     }
 
     @Override
     public Candidato save(CandidatoDTO candidatoDTO) {
+        Profissao profissao = profissaoRepository.findById(candidatoDTO.getProfissaoId())
+                .orElseThrow(() -> new ProfissaoNotFoundException("Nao existe profissao com id " + candidatoDTO.getProfissaoId()));
 
-        return null;
+        Candidato candidato = candidatoDTO.toCandidato();
+        candidato.setProfissao(profissao);
+        return candidatoRepository.save(candidato);
     }
 
     @Override
