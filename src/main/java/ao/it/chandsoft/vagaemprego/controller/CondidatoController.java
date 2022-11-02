@@ -2,16 +2,20 @@ package ao.it.chandsoft.vagaemprego.controller;
 
 import ao.it.chandsoft.vagaemprego.domain.Candidato;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoDTO;
+import ao.it.chandsoft.vagaemprego.domain.dto.Paginacao;
 import ao.it.chandsoft.vagaemprego.exception.FieldsNotValidException;
 import ao.it.chandsoft.vagaemprego.service.CandidatoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.*;
+import java.net.URI;
 import java.util.UUID;
 
 @Slf4j
@@ -27,14 +31,24 @@ public class CondidatoController {
     }
 
     @PostMapping
-    public Candidato save(@RequestBody @Valid CandidatoDTO candidatoDTO, BindingResult bindingResult) {
+    public ResponseEntity save(@Valid @RequestBody CandidatoDTO candidatoDTO, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
             throw new FieldsNotValidException(candidatoDTO.getClass(), bindingResult.getFieldErrors());
         }
 
         candidatoDTO.setId(null);
-        return candidatoService.save(candidatoDTO);
+        Candidato candidatoSalvo = candidatoService.save(candidatoDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(candidatoSalvo.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(candidatoSalvo);
+    }
+
+    @GetMapping
+    public Paginacao findAll(Pageable pageable) {
+        return candidatoService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

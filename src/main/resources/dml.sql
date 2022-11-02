@@ -1,0 +1,9 @@
+USE vaga_emprego;
+
+INSERT INTO curso VALUES ('160f7a7e-57d7-11ed-bb51-3c7c3f59a0f6','Java'),('16115126-57d7-11ed-bb51-3c7c3f59a0f6','MySQL Administration'),('1610bb38-57d7-11ed-bb51-3c7c3f59a0f6','MySQL Essentials'),('161027e6-57d7-11ed-bb51-3c7c3f59a0f6','Oracle Database'),('1611e287-57d7-11ed-bb51-3c7c3f59a0f6','Robotica');
+
+INSERT INTO profissao VALUES ('66ef0a31-5ac8-11ed-bb51-3c7c3f59a0f6','Administrador de Sistemas'),('09617f06-5ace-11ed-bb51-3c7c3f59a0f6','Contabilista'),('2a01b61e-57d7-11ed-bb51-3c7c3f59a0f6','Motorista'),('200a0d9e-57d7-11ed-bb51-3c7c3f59a0f6','Programador');
+
+INSERT INTO candidato VALUES ('476fc04e-e26d-464e-9ba9-47339700bd11','Madureira Lima','madureira.lima@gmail.com','1984-03-10','09617f06-5ace-11ed-bb51-3c7c3f59a0f6','Angolana','Luanda','Luanda','2022-11-02'),('50d42244-b4dc-415b-bcfd-bf9d45f47e2f','Maro Fernando','marofernando@gmail.com','1980-01-01','66ef0a31-5ac8-11ed-bb51-3c7c3f59a0f6','Angolana','Luanda','Luanda','2022-11-02'),('71497e09-b2d4-48c2-bc0c-75191fa3fe90','Nelson Chandimba da Silva','dismao16@gmail.com','1986-12-16','200a0d9e-57d7-11ed-bb51-3c7c3f59a0f6','Angolana','Luanda','Luanda','2022-10-30'),('f66c027b-f2bf-4031-a19c-9e0cdd748567','Hamilton Mapange','hmapange@gmail.com','1989-07-06','66ef0a31-5ac8-11ed-bb51-3c7c3f59a0f6','Angolana','Luanda','Luanda','2022-11-02');
+
+INSERT INTO telefone VALUES ('476fc04e-e26d-464e-9ba9-47339700bd11','923589300'),('50d42244-b4dc-415b-bcfd-bf9d45f47e2f','939300126'),('71497e09-b2d4-48c2-bc0c-75191fa3fe90','945263402'),('71497e09-b2d4-48c2-bc0c-75191fa3fe90','947596114'),('f66c027b-f2bf-4031-a19c-9e0cdd748567','923810474');
