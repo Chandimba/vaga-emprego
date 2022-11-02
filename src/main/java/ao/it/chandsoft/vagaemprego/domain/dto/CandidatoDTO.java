@@ -1,7 +1,5 @@
 package ao.it.chandsoft.vagaemprego.domain.dto;
 
-import ao.it.chandsoft.vagaemprego.domain.Candidato;
-import ao.it.chandsoft.vagaemprego.domain.Profissao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +13,7 @@ import java.util.UUID;
 @Setter
 public class CandidatoDTO implements Serializable {
 
-    private String id;
+    private UUID id;
     @NotBlank(message = "O nome do candidado é obrigatório")
     private String nome;
     @NotEmpty(message = "O e-mail é obrigatório")
@@ -26,8 +24,8 @@ public class CandidatoDTO implements Serializable {
     @Past(message = "A data de nascimento deve ser inferior a data actual")
     @NotNull(message = "A data de nascimento do candidato é obrigatória")
     private LocalDate dataNascimento;
-    @NotBlank(message = "O id da profissão do candidado é obrigatório")
-    private String profissaoId;
+    @NotNull(message = "O id da profissão do candidado é obrigatório")
+    private UUID profissaoId;
     @NotBlank(message = "A nacionalidade do candidado é obrigatória")
     private String nacionalidade;
     @NotBlank(message = "A cidade do candidado é obrigatória")
@@ -36,18 +34,4 @@ public class CandidatoDTO implements Serializable {
     private String morada;
     private LocalDate dataRegisto;
 
-    public Candidato toCandidato() {
-        Candidato candidato = new Candidato();
-        candidato.setId(id);
-        candidato.setNome(nome);
-        candidato.setEmail(email);
-        candidato.setTelefones(telefones);
-        candidato.setDataNascimento(dataNascimento);
-        candidato.setNacionalidade(nacionalidade);
-        candidato.setCidade(cidade);
-        candidato.setMorada(morada);
-        candidato.setDataRegisto(dataRegisto);
-
-        return candidato;
-    }
 }

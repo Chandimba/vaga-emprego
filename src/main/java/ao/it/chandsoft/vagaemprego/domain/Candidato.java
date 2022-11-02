@@ -2,6 +2,8 @@ package ao.it.chandsoft.vagaemprego.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -18,12 +20,17 @@ import java.util.UUID;
 public class Candidato implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
     private String nome;
     @Column(name = "email")
     private String email;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "candidato_id"))
+    @Column(name="numero")
     private Set<String> telefones;
     private LocalDate dataNascimento;
     @OneToOne
@@ -33,8 +40,6 @@ public class Candidato implements Serializable {
     private String morada;
     @CreatedDate
     private LocalDate dataRegisto;
-    @Transient
-    private int idade;
 
     public Integer getIdade() {
         return dataNascimento != null? (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now()): null;
@@ -42,6 +47,7 @@ public class Candidato implements Serializable {
 
     @PrePersist
     public void init() {
-        id = UUID.randomUUID().toString();
+        id = UUID.randomUUID();
+        dataRegisto = LocalDate.now();
     }
 }
