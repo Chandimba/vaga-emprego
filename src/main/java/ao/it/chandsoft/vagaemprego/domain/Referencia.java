@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,11 +12,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "profissao")
-public class Profissao implements Serializable {
-
+@Table(name = "referencia")
+public class Referencia implements Serializable {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(generator = "UUID")
@@ -25,5 +22,13 @@ public class Profissao implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
-    private String designacao;
+    private String nome;
+    @Column(name = "email")
+    private String email;
+    @Column(name="telefone")
+    private String telefone;
+    @Column(name="cargo")
+    private String cargo;
+    @Column(name="relacao")
+    private String relacao;
 }
