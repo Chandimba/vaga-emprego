@@ -3,6 +3,7 @@ package ao.it.chandsoft.vagaemprego.service.impl;
 import ao.it.chandsoft.vagaemprego.domain.Candidato;
 import ao.it.chandsoft.vagaemprego.domain.Profissao;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoDTO;
+import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoFilterDTO;
 import ao.it.chandsoft.vagaemprego.domain.dto.Paginacao;
 import ao.it.chandsoft.vagaemprego.exception.CandidatoNotFoundException;
 import ao.it.chandsoft.vagaemprego.exception.ProfissaoNotFoundException;
@@ -40,8 +41,16 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public Paginacao<Candidato> findAll(Pageable pageable) {
-        return new Paginacao<>(candidatoRepository.findAll(pageable));
+    public Paginacao<Candidato> findAll(CandidatoFilterDTO candidatoFilter, Pageable pageable) {
+        return new Paginacao<>(
+                candidatoRepository.findAll(
+                        candidatoFilter.getNome(),
+                        candidatoFilter.getCidade(),
+                        candidatoFilter.getProfissaoDesignacao(),
+                        candidatoFilter.getDataNascimento(),
+                        candidatoFilter.getDataRegistoInicial(),
+                        candidatoFilter.getDataRegistoFinal(),
+                        pageable));
     }
 
     @Override

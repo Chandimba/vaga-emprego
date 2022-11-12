@@ -1,5 +1,6 @@
 package ao.it.chandsoft.vagaemprego.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,15 +11,18 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "candidato")
 public class Candidato implements Serializable {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -40,6 +44,9 @@ public class Candidato implements Serializable {
     private String morada;
     @CreatedDate
     private LocalDate dataRegisto;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidato_id")
+    private List<Referencia> referencias;
 
     public Integer getIdade() {
         return dataNascimento != null? (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now()): null;

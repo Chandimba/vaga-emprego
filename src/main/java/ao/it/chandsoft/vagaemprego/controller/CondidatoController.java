@@ -2,6 +2,7 @@ package ao.it.chandsoft.vagaemprego.controller;
 
 import ao.it.chandsoft.vagaemprego.domain.Candidato;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoDTO;
+import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoFilterDTO;
 import ao.it.chandsoft.vagaemprego.domain.dto.Paginacao;
 import ao.it.chandsoft.vagaemprego.exception.FieldsNotValidException;
 import ao.it.chandsoft.vagaemprego.service.CandidatoService;
@@ -47,8 +48,8 @@ public class CondidatoController {
     }
 
     @GetMapping
-    public Paginacao findAll(Pageable pageable) {
-        return candidatoService.findAll(pageable);
+    public Paginacao findAll(CandidatoFilterDTO candidatoFilter, Pageable pageable) {
+        return candidatoService.findAll(candidatoFilter, pageable);
     }
 
     @GetMapping("/{id}")

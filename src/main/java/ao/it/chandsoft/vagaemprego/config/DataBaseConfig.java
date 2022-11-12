@@ -19,10 +19,10 @@ public class DataBaseConfig {
 
     @Transactional
     @EventListener(ApplicationReadyEvent.class)
-    public void loadData() {
+    public void loadScriptSQL() {
         System.out.println("Executing sql-ddl");
         EntityManagerFactoryInfo info = (EntityManagerFactoryInfo) entityManager.getEntityManagerFactory();
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("ddl.sql"), new ClassPathResource("dml.sql"));
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(true, false, "UTF-8", new ClassPathResource("ddl.sql"), new ClassPathResource("dml.sql"));
         resourceDatabasePopulator.execute(info.getDataSource());
         System.out.println("Sql-ddl executed successefuly");
     }
