@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS lingua (
 CREATE TABLE IF NOT EXISTS lingua_candidato (
 	lingua_id binary(36) not null,
 	candidato_id binary(36) not null,
-    nivel int(1) comment '0-Native; 1-Fluent; 2-Beginner; 3-Elementary; 4-Pre-Intermediate; 5-Itermediate; 6-Advanced; 7-Good',
+    nivel int(1) comment '0-Native; 1-Fluent; 2-Beginner; 3-Elementary; 4-Pre-Intermediate; 5-Intermediate; 6-Advanced; 7-Good',
     constraint pk_linguacandidato primary key(lingua_id, candidato_id),
     constraint fk_linguacandidato_lingua foreign key(lingua_id) references lingua(id),
     constraint fk_linguacandidato_candidato foreign key(candidato_id) references candidato(id)
