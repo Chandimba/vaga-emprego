@@ -6,6 +6,7 @@ import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoFilterDTO;
 import ao.it.chandsoft.vagaemprego.domain.dto.Paginacao;
 import ao.it.chandsoft.vagaemprego.exception.FieldsNotValidException;
 import ao.it.chandsoft.vagaemprego.service.CandidatoService;
+import ao.it.chandsoft.vagaemprego.util.UriUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -40,10 +41,7 @@ public class CondidatoController {
 
         candidatoDTO.setId(null);
         Candidato candidatoSalvo = candidatoService.save(candidatoDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(candidatoSalvo.getId())
-                .toUri();
+        URI uri = UriUtil.addUuidToCurrentUrlPath(candidatoSalvo.getId());
         return ResponseEntity.created(uri).body(candidatoSalvo);
     }
 

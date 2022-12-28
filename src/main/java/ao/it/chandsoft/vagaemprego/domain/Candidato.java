@@ -1,5 +1,6 @@
 package ao.it.chandsoft.vagaemprego.domain;
 
+import ao.it.chandsoft.vagaemprego.util.DateTimeUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "candidato")
+@NamedEntityGraph(name = "teste_entity_graph", includeAllAttributes = true)
 public class Candidato implements Serializable {
 
     @EqualsAndHashCode.Include
@@ -32,7 +34,7 @@ public class Candidato implements Serializable {
     private String nome;
     @Column(name = "email")
     private String email;
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "candidato_id"))
     @Column(name="numero")
     private Set<String> telefones;
@@ -44,7 +46,7 @@ public class Candidato implements Serializable {
     private String morada;
     @CreatedDate
     private LocalDate dataRegisto;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidato_id")
     private List<Referencia> referencias;
 
@@ -55,6 +57,6 @@ public class Candidato implements Serializable {
     @PrePersist
     public void init() {
         id = UUID.randomUUID();
-        dataRegisto = LocalDate.now();
+        dataRegisto = DateTimeUtil.getCurrentDate();
     }
 }

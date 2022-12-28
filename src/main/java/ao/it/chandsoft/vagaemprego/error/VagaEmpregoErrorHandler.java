@@ -17,7 +17,7 @@ public class VagaEmpregoErrorHandler {
         return ResponseEntity.badRequest()
                 .body(ErroResponse.builder()
                         .codigoHttp(400)
-                        .titulo("Erro de validacao dos atributos")
+                        .titulo("Erro de validação dos atributos")
                         .detelhes(exception.getFieldErros().stream()
                                 .map(FieldError::getDefaultMessage)
                                 .collect(Collectors.toList())

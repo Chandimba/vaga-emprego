@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "referencia")
 public class Referencia implements Serializable {
     @EqualsAndHashCode.Include
