@@ -1,9 +1,11 @@
 package ao.it.chandsoft.vagaemprego.controller;
 
 import ao.it.chandsoft.vagaemprego.domain.Candidato;
+import ao.it.chandsoft.vagaemprego.domain.Referencia;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoDTO;
 import ao.it.chandsoft.vagaemprego.domain.dto.CandidatoFilterDTO;
 import ao.it.chandsoft.vagaemprego.domain.dto.Paginacao;
+import ao.it.chandsoft.vagaemprego.domain.dto.ReferenciaDTO;
 import ao.it.chandsoft.vagaemprego.exception.FieldsNotValidException;
 import ao.it.chandsoft.vagaemprego.service.CandidatoService;
 import ao.it.chandsoft.vagaemprego.util.UriUtil;
@@ -44,6 +46,21 @@ public class CondidatoController {
         URI uri = UriUtil.addUuidToCurrentUrlPath(candidatoSalvo.getId());
         return ResponseEntity.created(uri).body(candidatoSalvo);
     }
+
+
+    @PostMapping("{id}/referencias")
+    public ResponseEntity save(@Valid @RequestBody ReferenciaDTO referenciaDTO, BindingResult bindingResult, @PathVariable("id") UUID candidatoId) {
+
+        if(bindingResult.hasErrors()){
+            throw new FieldsNotValidException(referenciaDTO.getClass(), bindingResult.getFieldErrors());
+        }
+
+        referenciaDTO.setId(null);
+        Referencia referenciaSalva = candidatoService.saveReference(candidatoId, referenciaDTO);
+        URI uri = UriUtil.addUuidToCurrentUrlPath(referenciaSalva.getId());
+        return ResponseEntity.created(uri).body(referenciaSalva);
+    }
+
 
     @GetMapping
     public Paginacao findAll(CandidatoFilterDTO candidatoFilter, Pageable pageable) {
