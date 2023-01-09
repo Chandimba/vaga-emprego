@@ -1,5 +1,6 @@
 package ao.it.chandsoft.vagaemprego.domain.dto;
 
+import ao.it.chandsoft.vagaemprego.domain.Referencia;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,5 +34,6 @@ public class CandidatoDTO implements Serializable {
     @NotBlank(message = "A morada do candidado é obrigatória")
     private String morada;
     private LocalDate dataRegisto;
+    private Set<Referencia> referencias;
 
 }

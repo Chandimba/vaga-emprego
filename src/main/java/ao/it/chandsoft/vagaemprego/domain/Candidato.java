@@ -1,6 +1,7 @@
 package ao.it.chandsoft.vagaemprego.domain;
 
 import ao.it.chandsoft.vagaemprego.util.DateTimeUtil;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -46,9 +48,9 @@ public class Candidato implements Serializable {
     private String morada;
     @CreatedDate
     private LocalDate dataRegisto;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidato_id")
-    private List<Referencia> referencias;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "candidato")
+    @JsonManagedReference
+    private Set<Referencia> referencias;
 
     public Integer getIdade() {
         return dataNascimento != null? (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now()): null;
@@ -58,5 +60,9 @@ public class Candidato implements Serializable {
     public void init() {
         id = UUID.randomUUID();
         dataRegisto = DateTimeUtil.getCurrentDate();
+
+        if(Objects.nonNull(referencias)) {
+            referencias.forEach(referencia -> referencia.setCandidato(this));
+        }
     }
 }

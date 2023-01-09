@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -38,4 +39,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, UUID> {
             @Param("dataRegistoInicial") LocalDate dataRegistoInicial,
             @Param("dataRegistoFinal") LocalDate dataRegistoFinal,
             Pageable pageable);
+
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "teste_entity_graph")
+    Optional<Candidato> findById(UUID id);
 }

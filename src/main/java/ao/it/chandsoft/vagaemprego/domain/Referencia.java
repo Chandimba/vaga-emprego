@@ -1,5 +1,6 @@
 package ao.it.chandsoft.vagaemprego.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,4 +33,8 @@ public class Referencia implements Serializable {
     private String cargo;
     @Column(name="relacao")
     private String relacao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidato_id")
+    @JsonBackReference
+    private Candidato candidato;
 }
